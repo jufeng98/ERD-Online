@@ -8,6 +8,7 @@ import RemoveEntity from "@/components/dialog/entity/RemoveEntity";
 import AddModule from "@/components/dialog/module/AddModule";
 import RenameModule from "@/components/dialog/module/RenameModule";
 import RemoveModule from "@/components/dialog/module/RemoveModule";
+import RefreshModelModule from "@/components/dialog/module/RefreshModelModule";
 import {Typography} from '@mui/material';
 import {makeStyles} from "@mui/styles";
 import {Dropdown, Empty, Menu, Tree} from "antd";
@@ -115,6 +116,9 @@ export const renderModuleRightContext = (payload: { name: string, chnname: strin
     </Menu.Item>
     <Menu.Item>
       <PastModule disable={false}/>
+    </Menu.Item>
+    <Menu.Item>
+      <RefreshModelModule disable={false} moduleInfo={payload}/>
     </Menu.Item>
     <Menu.Item>
       <AddEntity moduleDisable={false}/>

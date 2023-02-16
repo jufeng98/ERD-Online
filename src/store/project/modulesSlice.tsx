@@ -5,6 +5,7 @@ import EntitiesSlice from "@/store/project/entitiesSlice";
 import {message} from "antd";
 import _ from 'lodash';
 import * as cache from '../../utils/cache';
+import * as Save from '@/utils/save';
 
 
 export type IModulesSlice = {
@@ -39,6 +40,7 @@ export interface IModulesDispatchSlice {
   copyModule: (payload: any) => void;
   cutModule: (payload: any) => void;
   pastModule: () => void;
+  refreshModule: (payload: any) => Promise<any>;
   updateRelation: (payload: any) => void;
   setCurrentModule: (payload: any) => void,
   updateAllModules: (payload: any) => void,
@@ -151,6 +153,15 @@ const ModulesSlice = (set: SetState<ProjectState>, get: GetState<ProjectState>) 
       message.error('数据格式错误，无法粘贴');
     }
   }),
+  refreshModule: (payload: any) => {
+    return new Promise(resolve => {
+      set(produce(state => {
+        const moduleName = payload.name;
+        Save.refreshProjectModule(moduleName)
+          .then(r => resolve(r))
+      }))
+    })
+  },
   updateRelation: (payload: any) => set(produce(state => {
     if (payload.graphCanvas) {
       state.project.projectJSON.modules[state.currentModuleIndex].graphCanvas = payload.graphCanvas;
@@ -193,7 +204,7 @@ const ModulesSlice = (set: SetState<ProjectState>, get: GetState<ProjectState>) 
           return true;
         }
       }).map((entity: any) => {
-        const tableNameFormat = get().project?.projectJSON?.profile?.tableNameFormat || '{title} {chnname}';
+        const tableNameFormat = get().project?.projectJSON?.profile?.tableNameFormat || '{title}({chnname})';
         console.log(102, tableNameFormat?.render(entity))
         return {
           type: 'entity',

@@ -45,6 +45,16 @@ export const saveProject = (data) => {
   });
 };
 
+export const refreshProjectModule = (moduleName) => {
+  const id = cache.getItem(CONSTANT.PROJECT_ID);
+  return request.post('/ncnb/project/refreshProjectModule', {
+    data: {
+      moduleName,
+      id
+    }
+  });
+};
+
 // 连接数据库
 
 export const ping = (data) => {

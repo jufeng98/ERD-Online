@@ -1,0 +1,16 @@
+<script>
+  function triggerClickEvent(params = {
+    bubbles: true,
+    cancelable: true
+  }) {
+    let selectEle = document.querySelector('.ant-btn.css-j0nf2s.ant-btn-primary')
+    if (!selectEle) {
+      setTimeout(triggerClickEvent, 1000)
+      return
+    }
+    let event = new MouseEvent("click", params)
+    selectEle.dispatchEvent(event)
+  }
+
+  triggerClickEvent()
+</script>

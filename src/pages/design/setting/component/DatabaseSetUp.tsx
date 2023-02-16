@@ -34,7 +34,7 @@ const DatabaseSetUp: React.FC<DatabaseSetUpProps> = (props) => {
 
   const url = {
     mysql: {
-      url: 'jdbc:mysql://IP地址:端口号/数据库名?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC',
+      url: 'jdbc:mysql://127.0.0.1:3306/sakila?useUnicode=true&characterEncoding=UTF-8&useInformationSchema=true',
       driver_class_name: 'com.mysql.jdbc.Driver',
     },
     oracle: {
@@ -87,7 +87,7 @@ const DatabaseSetUp: React.FC<DatabaseSetUpProps> = (props) => {
         if (res.code !== 200) {
           message.error('连接失败:' + res.msg);
         } else {
-          message.success('连接成功');
+          message.success(res.data);
         }
       }).catch((err) => {
         message.error('连接失败！');

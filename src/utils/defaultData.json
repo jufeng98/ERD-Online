@@ -3,58 +3,44 @@
   "profile": {
     "defaultFields": [
       {
-        "chnname": "主键",
+        "chnname": "主键ID",
         "name": "id",
-        "typeName": "标识号",
-        "type": "IdOrKey",
-        "dataType": "VARCHAR(32)",
+        "typeName": "无符号大整数",
+        "type": "BigIntUnsigned",
+        "dataType": "BIGINT UNSIGNED",
         "remark": "",
         "pk": true,
         "notNull": true,
+        "autoIncrement": true,
+        "relationNoShow": false,
+        "defaultValue": "",
+        "uiHint": ""
+      },
+      {
+        "chnname": "创建人编码",
+        "name": "create_code",
+        "typeName": "变长字符串",
+        "type": "String",
+        "dataType": "VARCHAR",
+        "remark": "(16)",
+        "pk": false,
+        "notNull": false,
         "autoIncrement": false,
         "relationNoShow": false,
         "defaultValue": "",
         "uiHint": ""
       },
       {
-        "chnname": "删除标识（0-正常,1-删除）",
-        "name": "del_flag",
-        "typeName": "单字符",
-        "type": "Char",
-        "dataType": "CHAR(1)",
-        "remark": "",
+        "chnname": "创建人名称",
+        "name": "create_name",
+        "typeName": "变长字符串",
+        "type": "String",
+        "dataType": "VARCHAR",
+        "remark": "(32)",
         "pk": false,
         "notNull": false,
         "autoIncrement": false,
-        "relationNoShow": true,
-        "defaultValue": "'0'",
-        "uiHint": ""
-      },
-      {
-        "chnname": "乐观锁",
-        "name": "revision",
-        "typeName": "整数",
-        "type": "Integer",
-        "dataType": "INT",
-        "remark": "",
-        "pk": false,
-        "notNull": false,
-        "autoIncrement": false,
-        "relationNoShow": true,
-        "defaultValue": "",
-        "uiHint": ""
-      },
-      {
-        "chnname": "创建人",
-        "name": "creator",
-        "typeName": "标识号",
-        "type": "IdOrKey",
-        "dataType": "VARCHAR(32)",
-        "remark": "",
-        "pk": false,
-        "notNull": false,
-        "autoIncrement": false,
-        "relationNoShow": true,
+        "relationNoShow": false,
         "defaultValue": "",
         "uiHint": ""
       },
@@ -68,27 +54,41 @@
         "pk": false,
         "notNull": false,
         "autoIncrement": false,
-        "relationNoShow": true,
+        "relationNoShow": false,
         "defaultValue": "CURRENT_TIMESTAMP",
         "uiHint": ""
       },
       {
-        "chnname": "更新人",
-        "name": "updater",
-        "typeName": "标识号",
-        "type": "IdOrKey",
-        "dataType": "VARCHAR(32)",
-        "remark": "",
+        "chnname": "操作人编码",
+        "name": "op_code",
+        "typeName": "变长字符串",
+        "type": "String",
+        "dataType": "VARCHAR",
+        "remark": "(16)",
         "pk": false,
         "notNull": false,
         "autoIncrement": false,
-        "relationNoShow": true,
+        "relationNoShow": false,
         "defaultValue": "",
         "uiHint": ""
       },
       {
-        "chnname": "更新时间",
-        "name": "update_time",
+        "chnname": "操作人名称",
+        "name": "op_name",
+        "typeName": "变长字符串",
+        "type": "String",
+        "dataType": "VARCHAR",
+        "remark": "(32)",
+        "pk": false,
+        "notNull": false,
+        "autoIncrement": false,
+        "relationNoShow": false,
+        "defaultValue": "",
+        "uiHint": ""
+      },
+      {
+        "chnname": "操作时间",
+        "name": "create_time",
         "typeName": "日期时间",
         "type": "DateTime",
         "dataType": "DATETIME",
@@ -96,8 +96,36 @@
         "pk": false,
         "notNull": false,
         "autoIncrement": false,
-        "relationNoShow": true,
-        "defaultValue": "",
+        "relationNoShow": false,
+        "defaultValue": "CURRENT_TIMESTAMP",
+        "uiHint": ""
+      },
+      {
+        "chnname": "状态枚举-INVALID:0:失效;VALID:1:有效",
+        "name": "state",
+        "typeName": "微小整数",
+        "type": "TinyInt",
+        "dataType": "TINYINT",
+        "remark": "(4)",
+        "pk": false,
+        "notNull": true,
+        "autoIncrement": false,
+        "relationNoShow": false,
+        "defaultValue": 1,
+        "uiHint": ""
+      },
+      {
+        "chnname": "删除标识枚举-DEL:0:已删除;NORMAL:1:正常",
+        "name": "state",
+        "typeName": "微小整数",
+        "type": "TinyInt",
+        "dataType": "TINYINT",
+        "remark": "(4)",
+        "pk": false,
+        "notNull": true,
+        "autoIncrement": false,
+        "relationNoShow": false,
+        "defaultValue": 1,
         "uiHint": ""
       }
     ]
@@ -105,177 +133,87 @@
   "dataTypeDomains": {
     "datatype": [
       {
-        "name": "默认字串",
-        "code": "DefaultString",
+        "name": "变长字符串",
+        "code": "String",
         "apply": {
+          "java": {
+            "type": "String"
+          },
+          "mysql": {
+            "type": "VARCHAR"
+          },
+          "oracle": {
+            "type": "NVARCHAR2"
+          },
+          "sqlserver": {
+            "type": "NVARCHAR"
+          },
           "JAVA": {
             "type": "String"
           },
           "MYSQL": {
-            "type": "VARCHAR(32)"
+            "type": "VARCHAR"
           },
           "ORACLE": {
-            "type": "NVARCHAR2(32)"
+            "type": "NVARCHAR2"
           },
           "SQLServer": {
-            "type": "NVARCHAR(32)"
+            "type": "NVARCHAR"
           },
           "PostgreSQL": {
-            "type": "VARCHAR(32)"
+            "type": "VARCHAR"
           }
         }
       },
       {
-        "name": "标识号",
-        "code": "IdOrKey",
+        "name": "字符串",
+        "code": "Char",
         "apply": {
-          "JAVA": {
+          "java": {
             "type": "String"
           },
-          "ORACLE": {
-            "type": "VARCHAR2(32)"
+          "mysql": {
+            "type": "CHAR"
           },
-          "MYSQL": {
-            "type": "VARCHAR(32)"
+          "oracle": {
+            "type": "CHAR"
           },
-          "SQLServer": {
-            "type": "VARCHAR(32)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(32)"
-          }
-        }
-      },
-      {
-        "name": "标识号-长",
-        "code": "LongKey",
-        "apply": {
-          "MYSQL": {
-            "type": "VARCHAR(64)"
-          },
-          "ORACLE": {
-            "type": "VARCHAR2(64)"
+          "sqlserver": {
+            "type": "CHAR"
           },
           "JAVA": {
             "type": "String"
           },
-          "SQLServer": {
-            "type": "VARCHAR(64)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(64)"
-          }
-        }
-      },
-      {
-        "name": "名称",
-        "code": "Name",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
           "MYSQL": {
-            "type": "VARCHAR(128)"
+            "type": "CHAR"
           },
           "ORACLE": {
-            "type": "NVARCHAR2(128)"
+            "type": "CHAR"
           },
           "SQLServer": {
-            "type": "NVARCHAR(128)"
+            "type": "CHAR"
           },
           "PostgreSQL": {
-            "type": "VARCHAR(128)"
+            "type": "CHAR"
           }
         }
       },
       {
-        "name": "备注说明",
-        "code": "Intro",
+        "name": "文本",
+        "code": "Text",
         "apply": {
-          "JAVA": {
+          "java": {
             "type": "String"
           },
-          "MYSQL": {
-            "type": "VARCHAR(512)"
+          "mysql": {
+            "type": "TEXT"
           },
-          "ORACLE": {
-            "type": "NVARCHAR2(512)"
+          "oracle": {
+            "type": "CLOB"
           },
-          "SQLServer": {
-            "type": "NVARCHAR(512)"
+          "sqlserver": {
+            "type": "NTEXT"
           },
-          "PostgreSQL": {
-            "type": "VARCHAR(512)"
-          }
-        }
-      },
-      {
-        "name": "字串-短",
-        "code": "ShortString",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
-          "MYSQL": {
-            "type": "VARCHAR(128)"
-          },
-          "ORACLE": {
-            "type": "NVARCHAR2(128)"
-          },
-          "SQLServer": {
-            "type": "NVARCHAR(128)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(128)"
-          }
-        }
-      },
-      {
-        "name": "字串-中",
-        "code": "MiddleString",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
-          "MYSQL": {
-            "type": "VARCHAR(1024)"
-          },
-          "ORACLE": {
-            "type": "NVARCHAR2(1024)"
-          },
-          "SQLServer": {
-            "type": "NVARCHAR(1024)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(1024)"
-          }
-        }
-      },
-      {
-        "name": "字串-长",
-        "code": "LongString",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
-          "ORACLE": {
-            "type": "NVARCHAR2(3072)"
-          },
-          "MYSQL": {
-            "type": "VARCHAR(3072)"
-          },
-          "SQLServer": {
-            "type": "NVARCHAR(3072)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(3072)"
-          }
-        }
-      },
-      {
-        "name": "大文本",
-        "code": "LongText",
-        "apply": {
           "JAVA": {
             "type": "String"
           },
@@ -297,6 +235,18 @@
         "name": "小数",
         "code": "Double",
         "apply": {
+          "java": {
+            "type": "Double"
+          },
+          "mysql": {
+            "type": "DECIMAL(32,10)"
+          },
+          "oracle": {
+            "type": "NUMBER(32,10)"
+          },
+          "sqlserver": {
+            "type": "DECIMAL(32,10)"
+          },
           "JAVA": {
             "type": "Double"
           },
@@ -315,23 +265,68 @@
         }
       },
       {
-        "name": "比例",
-        "code": "Ratio",
+        "name": "微小整数",
+        "code": "TinyInt",
         "apply": {
-          "MYSQL": {
-            "type": "DECIMAL(4,2)"
+          "java": {
+            "type": "Integer"
+          },
+          "mysql": {
+            "type": "TINYINT"
+          },
+          "oracle": {
+            "type": "TINYINT"
+          },
+          "sqlserver": {
+            "type": "TINYINT"
           },
           "JAVA": {
-            "type": "Double"
+            "type": "Integer"
+          },
+          "MYSQL": {
+            "type": "TINYINT"
           },
           "ORACLE": {
-            "type": "NUMBER(4,2)"
+            "type": "TINYINT"
           },
           "SQLServer": {
-            "type": "DECIMAL(4,2)"
+            "type": "TINYINT"
           },
           "PostgreSQL": {
-            "type": "DECIMAL(4,2)"
+            "type": "TINYINT"
+          }
+        }
+      },
+      {
+        "name": "小整数",
+        "code": "SmallInt",
+        "apply": {
+          "java": {
+            "type": "Integer"
+          },
+          "mysql": {
+            "type": "SMALLINT"
+          },
+          "oracle": {
+            "type": "SMALLINT"
+          },
+          "sqlserver": {
+            "type": "SMALLINT"
+          },
+          "JAVA": {
+            "type": "Integer"
+          },
+          "MYSQL": {
+            "type": "SMALLINT"
+          },
+          "ORACLE": {
+            "type": "SMALLINT"
+          },
+          "SQLServer": {
+            "type": "SMALLINT"
+          },
+          "PostgreSQL": {
+            "type": "SMALLINT"
           }
         }
       },
@@ -339,6 +334,18 @@
         "name": "整数",
         "code": "Integer",
         "apply": {
+          "java": {
+            "type": "Integer"
+          },
+          "mysql": {
+            "type": "INT"
+          },
+          "oracle": {
+            "type": "INT"
+          },
+          "sqlserver": {
+            "type": "INT"
+          },
           "JAVA": {
             "type": "Integer"
           },
@@ -360,11 +367,23 @@
         "name": "大整数",
         "code": "BigInt",
         "apply": {
-          "MYSQL": {
+          "java": {
+            "type": "Long"
+          },
+          "mysql": {
+            "type": "BIGINT"
+          },
+          "oracle": {
+            "type": "NUMBER"
+          },
+          "sqlserver": {
             "type": "BIGINT"
           },
           "JAVA": {
             "type": "Long"
+          },
+          "MYSQL": {
+            "type": "BIGINT"
           },
           "ORACLE": {
             "type": "NUMBER"
@@ -378,65 +397,35 @@
         }
       },
       {
-        "name": "金额",
-        "code": "Money",
+        "name": "无符号大整数",
+        "code": "BigIntUnsigned",
         "apply": {
+          "java": {
+            "type": "Long"
+          },
+          "mysql": {
+            "type": "BIGINT UNSIGNED"
+          },
+          "oracle": {
+            "type": "NUMBER UNSIGNED"
+          },
+          "sqlserver": {
+            "type": "BIGINT UNSIGNED"
+          },
           "JAVA": {
-            "type": "Double"
+            "type": "Long"
           },
           "MYSQL": {
-            "type": "DECIMAL(32,8)"
+            "type": "BIGINT UNSIGNED"
           },
           "ORACLE": {
-            "type": "NUMBER(32,8)"
+            "type": "NUMBER UNSIGNED"
           },
           "SQLServer": {
-            "type": "DECIMAL(32,8)"
+            "type": "BIGINT UNSIGNED"
           },
           "PostgreSQL": {
-            "type": "DECIMAL(32,8)"
-          }
-        }
-      },
-      {
-        "name": "是否",
-        "code": "YesNo",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
-          "MYSQL": {
-            "type": "VARCHAR(1)"
-          },
-          "ORACLE": {
-            "type": "VARCHAR2(1)"
-          },
-          "SQLServer": {
-            "type": "VARCHAR(1)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(1)"
-          }
-        }
-      },
-      {
-        "name": "数据字典",
-        "code": "Dict",
-        "apply": {
-          "JAVA": {
-            "type": "String"
-          },
-          "MYSQL": {
-            "type": "VARCHAR(32)"
-          },
-          "ORACLE": {
-            "type": "VARCHAR2(32)"
-          },
-          "SQLServer": {
-            "type": "VARCHAR(32)"
-          },
-          "PostgreSQL": {
-            "type": "VARCHAR(32)"
+            "type": "BIGINT UNSIGNED"
           }
         }
       },
@@ -444,6 +433,18 @@
         "name": "日期",
         "code": "Date",
         "apply": {
+          "java": {
+            "type": "Date"
+          },
+          "mysql": {
+            "type": "DATE"
+          },
+          "oracle": {
+            "type": "DATE"
+          },
+          "sqlserver": {
+            "type": "DATE"
+          },
           "JAVA": {
             "type": "Date"
           },
@@ -465,6 +466,18 @@
         "name": "日期时间",
         "code": "DateTime",
         "apply": {
+          "java": {
+            "type": "Date"
+          },
+          "mysql": {
+            "type": "DATETIME"
+          },
+          "oracle": {
+            "type": "DATE"
+          },
+          "sqlserver": {
+            "type": "DATE"
+          },
           "JAVA": {
             "type": "Date"
           },
@@ -481,27 +494,6 @@
             "type": "DATE"
           }
         }
-      },
-      {
-        "name": "单字符",
-        "code": "Char",
-        "apply": {
-          "MYSQL": {
-            "type": "CHAR(1)"
-          },
-          "ORACLE": {
-            "type": "CHAR(1)"
-          },
-          "JAVA": {
-            "type": "String"
-          },
-          "SQLServer": {
-            "type": "CHAR(1)"
-          },
-          "PostgreSQL": {
-            "type": "CHAR(1)"
-          }
-        }
       }
     ],
     "database": [
@@ -510,7 +502,7 @@
         "template": "DROP TABLE `{{=it.entity.title}}`;\n$blankline\nCREATE TABLE `{{=it.entity.title}}`(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.pk }}{{ pkList.push(field.name) }}{{?}}\n    `{{=field.name}}` {{=field.type}} {{= field.pk ? 'NOT NULL' : '' }} COMMENT '{{=it.func.join(field.chnname,field.remark,';')}}' {{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n) COMMENT = '{{=it.func.join(it.entity.chnname,it.entity.remark,';') }}'",
         "fileShow": true,
         "defaultDatabase": true,
-        "createTableTemplate": "CREATE TABLE `{{=it.entity.title}}`(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.pk }}{{ pkList.push(field.name) }}{{?}}\n    `{{=field.name}}` {{=field.type}} {{= field.notNull ? 'NOT NULL' : '' }} {{= field.autoIncrement ? 'AUTO_INCREMENT' : '' }} {{= field.defaultValue ? it.func.join('DEFAULT',field.defaultValue,' ') : '' }} COMMENT '{{=it.func.join(field.chnname,field.remark,' ')}}' {{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n) COMMENT = '{{=it.func.join(it.entity.chnname,it.entity.remark,' ') }}';{{=it.separator}}\n$blankline\n",
+        "createTableTemplate": "CREATE TABLE `{{=it.entity.title}}`(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.pk }}{{ pkList.push(field.name) }}{{?}}\n    `{{=field.name}}` {{=field.dataType}}{{=field.remark}} {{= field.notNull ? 'NOT NULL' : '' }} {{= field.autoIncrement ? 'AUTO_INCREMENT' : '' }} {{= field.defaultValue ? it.func.join('DEFAULT',field.defaultValue,' ') : '' }} COMMENT '{{=it.func.join(field.chnname,' ')}}' {{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n) COMMENT = '{{=it.func.join(it.entity.chnname,' ') }}';{{=it.separator}}\n$blankline\n",
         "deleteTableTemplate": "DROP TABLE `{{=it.entity.title}}`;{{=it.separator}}",
         "rebuildTableTemplate": "create table ERD_UP_{{=it.oldEntity.title}}\nas select * from {{=it.oldEntity.title}};{{=it.separator}}\n$blankline\n\ndrop table {{=it.oldEntity.title}};{{=it.separator}}\n$blankline\n\nCREATE TABLE {{=it.newEntity.title}}(\n{{ pkList = [] ; }}\n{{~it.newEntity.fields:field:index}}\n    {{? field.pk }}{{ pkList.push(field.name) }}{{?}}\n    `{{=field.name}}` {{=field.type}} {{= field.notNull ? 'NOT NULL' : '' }} COMMENT '{{=it.func.join(field.chnname,field.remark,';')}}' {{= index < it.newEntity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n) COMMENT = '{{=it.func.join(it.newEntity.chnname,it.newEntity.remark,';') }}';{{=it.separator}}\n$blankline\n\n{{ sameCols = it.func.intersect(it.newEntity.fields,it.oldEntity.fields) ;}}\ninsert into {{=it.newEntity.title}}(\n{{~sameCols:field:index}}\n    `{{=field.name}}`{{? index<sameCols.length-1}},{{?}}\n{{~}}\n) \nselect \n{{~sameCols:field:index}}\n    `{{=field.name}}`{{? index<sameCols.length-1}},{{?}}\n{{~}}\nfrom ERD_UP_{{=it.oldEntity.title}};{{=it.separator}}\n$blankline\n\ndrop table ERD_UP_{{=it.oldEntity.title}};{{=it.separator}}\n$blankline\n{{~it.newEntity.indexs:index}}\nALTER TABLE {{=it.newEntity.title}} ADD {{? index.isUnique}}UNIQUE{{??}}INDEX{{?}} {{=index.name}}({{=it.func.join(...index.fields,',')}});{{=it.separator}}\n{{~}}",
         "createFieldTemplate": "ALTER TABLE `{{=it.entity.title}}` ADD COLUMN `{{=it.field.name}}` {{=it.field.type}} {{? it.field.notNull}}NOT NULL{{?}} {{? it.field.defaultValue}}DEFAULT {{? null==it.field.defaultValue}}NULL{{??}}{{=it.field.defaultValue}}{{?}}{{?}} {{? it.field.autoIncrement}}AUTO_INCREMENT{{?}} {{? it.field.pk}}PRIMARY KEY{{?}} {{? it.field.chnname}}COMMENT '{{=it.field.chnname}}'{{?}} {{? it.field.addAfter}}AFTER {{=it.field.addAfter}}{{?}};{{=it.separator}}",

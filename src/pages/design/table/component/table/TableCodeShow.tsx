@@ -78,7 +78,13 @@ const TableCodeShow: React.FC<TableCodeShowProps> = (props) => {
           && c.type === 'field'
           && title === dataTable.title);
     });
-    return getCodeByDataTable(dataSource, props.moduleEntity.module, dataTable, dbCode, templateCode, tempChanges, oldDataSource);
+    let codeByDataTable;
+    if (templateCode === 'originalCreateTableTemplate') {
+      codeByDataTable = dataTable.originalCreateTableSql;
+    } else {
+      codeByDataTable = getCodeByDataTable(dataSource, props.moduleEntity.module, dataTable, dbCode, templateCode, tempChanges, oldDataSource);
+    }
+    return codeByDataTable;
   }
 
   useEffect(() => {
@@ -89,6 +95,7 @@ const TableCodeShow: React.FC<TableCodeShowProps> = (props) => {
 
     <Paragraph copyable={{text: result}}>    {
       (templateCode === 'createTableTemplate' ||
+        templateCode === 'originalCreateTableTemplate' ||
         templateCode === 'deleteTableTemplate' ||
         templateCode === 'createIndexTemplate') ? '该脚本为全量脚本' :
         <Tooltip placement="top" title='差异化脚本:
